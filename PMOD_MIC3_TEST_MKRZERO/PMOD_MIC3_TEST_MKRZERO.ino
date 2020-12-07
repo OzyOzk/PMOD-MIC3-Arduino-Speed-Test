@@ -6,8 +6,6 @@
 * the analog signal from the micrphone to a digital value.
 * The range of clock frequencies for this ADC is 10 kHz to 20MHz
 * 
-* Hz Calculation doesnt work if the time taken to take all samples
-* is above 1 second
 * 
 * Due to the speed of the SPI, and the fact that doubles are 32
 * bits on arduinos, calculating Hz as SAMPLES/delta doesn't work for small  
