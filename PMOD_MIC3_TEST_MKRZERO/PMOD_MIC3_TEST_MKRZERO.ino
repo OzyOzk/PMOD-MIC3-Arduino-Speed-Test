@@ -28,6 +28,10 @@
   SS      to        6
 */
 
+
+/* Comment this out to print incoming data */
+#define TESTHZ
+
 #include <SPI.h> // call library
 
 #define SS 6 // Assignment of the CS pin
@@ -52,7 +56,10 @@ void setup(){
 }
 
 void loop(){
+  #ifdef TESTHZ
   start = micros();
+  #endif
+  
   for(int i = 0; i < SAMPLES; i++){
     SPI.beginTransaction(pmod_settings);
     
@@ -62,13 +69,18 @@ void loop(){
     digitalWrite(SS, HIGH);
     
     analog = res[0] << 8 | res[1];
+    #ifndef TESTHZ
+    Serial.println(analog);
+    #endif
   }
   SPI.endTransaction();
+  #ifdef TESTHZ
   delta = micros() - start;
-
+  
   Serial.print("Execution time is:\t");Serial.print(delta);Serial.println(" us");
   Serial.print("Sampling Frequency:\t");Serial.println(float(SAMPLES/(delta/1000000.0f)));
   Serial.println();
   
   delay(2000);
+  #endif
 }
